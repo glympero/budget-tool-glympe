@@ -26,9 +26,24 @@
     </div>
     <div>
       {{ form_start(form) }}
+      {{ form_widget(form.title, { 'value': '' }) }}
       {{ form_widget(form) }}
       {{ form_end(form) }}
     </div>
+
+    <table>
+    {% if allInitiatives is defined %}
+      {% for i in allInitiatives %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.title }}</td>
+            <td>{{ i.value }}</td>
+        </tr>
+     {% endfor %}
+
+    {% endif %} 
+    
+    </table>
 {% endblock %}
 
 {% block stylesheets %}

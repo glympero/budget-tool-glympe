@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Console\Helper\Table;
 
 class DefaultController extends Controller
 {   
@@ -47,7 +48,8 @@ class DefaultController extends Controller
                 'notice',
                 'Your budget has been saved!'
             );
-            return $this->redirectToRoute('initiative');
+            $budget_id = $budget->getId();
+            return $this->redirectToRoute('initiative', array('budget_id' => $budget_id));
         }
 
         return $this->render('default/index.html.twig', array(
@@ -56,13 +58,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/initiative", name="initiative")
+     * Matches /initiative/*
+     * 
+     * @Route("/initiative/{budget_id}", name="initiative")
      */
-    public function initiativeAction(Request $request)
+    public function initiativeAction(Request $request, $budget_id)
     {   
+        $budget = $this->getDoctrine()
+        ->getRepository('AppBundle:Budget')
+        ->find($budget_id);
+        $allInitiatives = $budget->getInitiatives();
         // create a task and give it some dummy data for this example
         $initiative = new Initiative();
-
+        $initiative->setBudget($budget);
         $form = $this->createFormBuilder($initiative)
             ->add('title', TextType::class)
             ->add('value', NumberType::class)
@@ -74,14 +82,24 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $initiative = $form->getData();
             // Prepare to save the object
+            $em = $this->getDoctrine()->getManager();
             $em->persist($initiative);
             //Executr query
             $em->flush();
-            $this->addFlash(
-                'notice',
-                'Your initiative has been saved!'
-            );
-            return $this->redirectToRoute('initiative');
+            if($budget->budgetExceeded())
+            {
+                $this->addFlash(
+                    'notice',
+                    'Your initiative has been saved! - budget exceeded!'
+                );
+            }else {
+                $this->addFlash(
+                    'notice',
+                    'Your initiative has been saved! - budget not exceeded'
+                );
+            }
+            $allInitiatives = $budget->getInitiatives();
+            return $this->render('default/initiative.html.twig', array('form' => $form->createView(),'allInitiatives' => $allInitiatives));
         }
 
         return $this->render('default/initiative.html.twig', array(

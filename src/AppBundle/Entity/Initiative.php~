@@ -37,6 +37,12 @@ class Initiative
     private $value;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Budget", inversedBy="initiatives")
+     * @ORM\JoinColumn(name="budget_id", referencedColumnName="id")
+     */
+    private $budget;
+
+    /**
      * Get id
      *
      * @return integer
@@ -92,5 +98,29 @@ class Initiative
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param \AppBundle\Entity\Budget $budget
+     *
+     * @return Initiative
+     */
+    public function setBudget(\AppBundle\Entity\Budget $budget = null)
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return \AppBundle\Entity\Budget
+     */
+    public function getBudget()
+    {
+        return $this->budget;
     }
 }

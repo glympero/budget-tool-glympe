@@ -51,6 +51,17 @@ class Budget
      *
      * @return integer
      */
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Initiative", mappedBy="budget")
+     */
+    private $initiatives;
+
+    public function __construct()
+    {
+        $this->initiatives = new ArrayCollection();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -158,5 +169,39 @@ class Budget
             return false;
         }
         return true;
+    }
+
+    /**
+     * Add initiative
+     *
+     * @param \AppBundle\Entity\Product $initiative
+     *
+     * @return Budget
+     */
+    public function addInitiative(\AppBundle\Entity\Product $initiative)
+    {
+        $this->initiatives[] = $initiative;
+
+        return $this;
+    }
+
+    /**
+     * Remove initiative
+     *
+     * @param \AppBundle\Entity\Product $initiative
+     */
+    public function removeInitiative(\AppBundle\Entity\Product $initiative)
+    {
+        $this->initiatives->removeElement($initiative);
+    }
+
+    /**
+     * Get initiatives
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInitiatives()
+    {
+        return $this->initiatives;
     }
 }

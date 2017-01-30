@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -51,6 +52,17 @@ class Budget
      *
      * @return integer
      */
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Initiative", mappedBy="budget")
+     */
+    private $initiatives;
+
+    public function __construct()
+    {
+        $this->initiatives = new ArrayCollection();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -152,11 +164,52 @@ class Budget
         return $this->endDate;
     }
 
-    public function budgetExceeded() 
+    public function budgetExceeded()
     {
-        if($initiatives >= $this->getValue()){
+        $total = 0;
+        $initiatives = $this->getInitiatives();
+        foreach($initiatives as $initiative)
+        {
+            $total += $initiative->getValue();
+        }
+
+        if($total <= $this->getValue()){
             return false;
         }
         return true;
+    }
+
+    /**
+     * Add initiative
+     *
+     * @param \AppBundle\Entity\Initiative $initiative
+     *
+     * @return Budget
+     */
+    public function addInitiative(\AppBundle\Entity\Initiative $initiative)
+    {
+        $this->initiatives[] = $initiative;
+
+        return $this;
+    }
+
+    /**
+     * Remove initiative
+     *
+     * @param \AppBundle\Entity\Initiative $initiative
+     */
+    public function removeInitiative(\AppBundle\Entity\Initiative $initiative)
+    {
+        $this->initiatives->removeElement($initiative);
+    }
+
+    /**
+     * Get initiatives
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInitiatives()
+    {
+        return $this->initiatives;
     }
 }
