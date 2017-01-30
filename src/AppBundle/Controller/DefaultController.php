@@ -45,7 +45,7 @@ class DefaultController extends Controller
             //Executr query
             $em->flush();
             $this->addFlash(
-                'notice',
+                'success',
                 'Your budget has been saved!'
             );
             $budget_id = $budget->getId();
@@ -89,12 +89,12 @@ class DefaultController extends Controller
             if($budget->budgetExceeded())
             {
                 $this->addFlash(
-                    'notice',
+                    'danger',
                     'Your initiative has been saved! - budget exceeded!'
                 );
             }else {
                 $this->addFlash(
-                    'notice',
+                    'info',
                     'Your initiative has been saved! - budget not exceeded'
                 );
             }

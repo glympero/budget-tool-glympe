@@ -68,6 +68,11 @@ class Budget
         return $this->id;
     }
 
+    public function setId()
+    {
+        $this->id = 1;
+        return $this;
+    }
     /**
      * Set title
      *

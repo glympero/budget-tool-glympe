@@ -10,13 +10,13 @@
       </div>
       <div class="main">
 
-        <div id="status">
-          {% for flash_message in app.session.flashBag.get('notice') %}
-              <div class="flash-notice">
-                  {{ flash_message }}
+        {% for type, flashes in app.session.flashbag.all %}
+          {% for flash in flashes %}
+              <div class="alert alert-{{ type }} fade in">
+                  {{ flash }}
               </div>
           {% endfor %}
-        </div>
+      {% endfor %}
         
         <h2>Add an initiative</h2>
     
