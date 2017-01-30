@@ -26,7 +26,10 @@
     </div>
     <div>
       {{ form_start(form) }}
-      {{ form_widget(form.title, { 'value': '' }) }}
+      {{ form_label(form.title) }}
+      {{ form_widget(form.title, {'value': '' }) }}
+      {{ form_label(form.value) }}
+      {{ form_widget(form.value, {'value': '' }) }}
       {{ form_widget(form) }}
       {{ form_end(form) }}
     </div>
