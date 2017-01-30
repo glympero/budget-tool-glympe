@@ -10,7 +10,6 @@ class BudgetTest extends \PHPUnit_Framework_TestCase
     public function testBudget()
     {
         $budget = new Budget();
-        $budget->setId();
         $budget->setTitle("Test Budget");
         $budget->setValue(1000);
         
