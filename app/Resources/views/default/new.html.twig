@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1>Welcome to Budget Tool</h1>
+            </div>
+
+            <div id="status">
+              {% for flash_message in app.session.flashBag.get('notice') %}
+                  <div class="flash-notice">
+                      {{ flash_message }}
+                  </div>
+              {% endfor %}
+            </div>
+
+            <div id="next">
+                <h2>Add a budget</h2>
+                <p>
+                    
+                </p>
+            </div>
+
+        </div>
+    </div>
+     
+
+    <div>
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
