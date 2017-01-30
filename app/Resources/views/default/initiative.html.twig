@@ -1,52 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1>Add an initiative</h1>
-            </div>
+  {% include('default/navbar.html.twig') %}
+    <div class="starter-template jumbotron">
+        <h1>Welcome to Budget Tool</h1>
+        <p class="lead">
+          Create a budget and keep track of your expenses!
+        </p>
+      </div>
+      <div class="main">
 
-            <div id="status">
-              {% for flash_message in app.session.flashBag.get('notice') %}
-                  <div class="flash-notice">
-                      {{ flash_message }}
-                  </div>
-              {% endfor %}
-            </div>
-
-            <div id="next">
-                <h2>Add an initiative</h2>
-                <p>
-                    
-                </p>
-            </div>
-
+        <div id="status">
+          {% for flash_message in app.session.flashBag.get('notice') %}
+              <div class="flash-notice">
+                  {{ flash_message }}
+              </div>
+          {% endfor %}
         </div>
-    </div>
-    <div>
-      {{ form_start(form) }}
-      {{ form_label(form.title) }}
-      {{ form_widget(form.title, {'value': '' }) }}
-      {{ form_label(form.value) }}
-      {{ form_widget(form.value, {'value': '' }) }}
-      {{ form_widget(form) }}
-      {{ form_end(form) }}
-    </div>
-
-    <table>
-    {% if allInitiatives is defined %}
-      {% for i in allInitiatives %}
-        <tr>
-            <td>{{ i.id }}</td>
-            <td>{{ i.title }}</td>
-            <td>{{ i.value }}</td>
-        </tr>
-     {% endfor %}
-
-    {% endif %} 
+        
+        <h2>Add an initiative</h2>
     
-    </table>
+      {{ form_start(form) }}
+      <div class="form-group">
+          {{ form_label(form.title) }}
+          {{ form_widget(form.title, {'value': '' }) }}
+         </div>
+         <div class="form-group">
+          {{ form_label(form.value) }}
+          {{ form_widget(form.value, {'value': '' }) }}
+        </div>
+      {{ form_end(form) }}
+      <hr/>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-2">
+            {% if allInitiatives is defined %}
+              <h2>Initiatives Table</h2>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in allInitiatives %}
+                    <tr>
+                      <td>{{ i.id }}</td>
+                      <td>{{ i.title }}</td>
+                      <td>{{ i.value }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %} 
+          </div>
+        </div>
+      </div>
 {% endblock %}
 
 {% block stylesheets %}
