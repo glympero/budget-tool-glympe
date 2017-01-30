@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Budget;
+use AppBundle\Entity\Initiative;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DefaultController extends Controller
-{
+{   
+    
     /**
      * @Route("/", name="homepage")
      */
@@ -45,10 +47,44 @@ class DefaultController extends Controller
                 'notice',
                 'Your budget has been saved!'
             );
-            return $this->render('initiative/index.html.twig');
+            return $this->redirectToRoute('initiative');
         }
 
-        return $this->render('default/new.html.twig', array(
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/initiative", name="initiative")
+     */
+    public function initiativeAction(Request $request)
+    {   
+        // create a task and give it some dummy data for this example
+        $initiative = new Initiative();
+
+        $form = $this->createFormBuilder($initiative)
+            ->add('title', TextType::class)
+            ->add('value', NumberType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Initiative'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $initiative = $form->getData();
+            // Prepare to save the object
+            $em->persist($initiative);
+            //Executr query
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                'Your initiative has been saved!'
+            );
+            return $this->redirectToRoute('initiative');
+        }
+
+        return $this->render('default/initiative.html.twig', array(
             'form' => $form->createView(),
         ));
     }

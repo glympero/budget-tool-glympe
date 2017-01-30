@@ -1,3 +1,7 @@
+# acme_budget:
+#     resource: "@AcmeBudgetBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

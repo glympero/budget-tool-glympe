@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="budget")
+ * @ORM\Table(name="initiative")
  */
-class Budget
-{   
+class Initiative
+{
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,6 +23,7 @@ class Budget
      * @Assert\NotBlank()
      */
     private $title;
+
     /**
      * @ORM\Column(type="decimal", precision=13, scale=4)
      * @Assert\NotBlank()
@@ -33,18 +35,6 @@ class Budget
      * )
      */
     private $value;
-    /**
-     * @ORM\Column(type="datetime", name="start_date")
-     * @Assert\NotBlank()
-     * @Assert\Type("\DateTime")
-     */
-    private $startDate;
-    /**
-     * @ORM\Column(type="datetime", name="end_date")
-     * @Assert\NotBlank()
-     * @Assert\Type("\DateTime")
-     */
-    private $endDate;
 
     /**
      * Get id
@@ -61,7 +51,7 @@ class Budget
      *
      * @param string $title
      *
-     * @return Budget
+     * @return Initiative
      */
     public function setTitle($title)
     {
@@ -85,7 +75,7 @@ class Budget
      *
      * @param string $value
      *
-     * @return Budget
+     * @return Initiative
      */
     public function setValue($value)
     {
@@ -102,61 +92,5 @@ class Budget
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * Set startDate
-     *
-     * @param \DateTime $startDate
-     *
-     * @return Budget
-     */
-    public function setStartDate($startDate)
-    {
-        $this->startDate = $startDate;
-
-        return $this;
-    }
-
-    /**
-     * Get startDate
-     *
-     * @return \DateTime
-     */
-    public function getStartDate()
-    {
-        return $this->startDate;
-    }
-
-    /**
-     * Set endDate
-     *
-     * @param \DateTime $endDate
-     *
-     * @return Budget
-     */
-    public function setEndDate($endDate)
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    /**
-     * Get endDate
-     *
-     * @return \DateTime
-     */
-    public function getEndDate()
-    {
-        return $this->endDate;
-    }
-
-    public function budgetExceeded() 
-    {
-        if($initiatives >= $this->getValue()){
-            return false;
-        }
-        return true;
     }
 }
