@@ -1,0 +1,18 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="starter-template">
+  <h1>Welcome to Budget Tool</h1>
+  <p class="lead">
+    Register to continue
+  </p>
+</div>
+<div class=" main">
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    <div class="form-group">
+    {{ form_widget(form) }}
+    </div>
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+{{ form_end(form) }}
+</div>

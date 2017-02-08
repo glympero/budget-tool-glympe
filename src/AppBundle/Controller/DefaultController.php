@@ -67,7 +67,7 @@ class DefaultController extends Controller
         $budget = $this->getDoctrine()
         ->getRepository('AppBundle:Budget')
         ->find($budget_id);
-        $allInitiatives = $budget->getInitiatives();
+        
         // create a task and give it some dummy data for this example
         $initiative = new Initiative();
         $initiative->setBudget($budget);
@@ -98,13 +98,16 @@ class DefaultController extends Controller
                     'Your initiative has been saved! - budget not exceeded'
                 );
             }
-            $allInitiatives = $budget->getInitiatives();
-            return $this->render('default/initiative.html.twig', array('form' => $form->createView(),'allInitiatives' => $allInitiatives));
+            
+            
         }
-
-        return $this->render('default/initiative.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        
+        $allInitiatives = $budget->getInitiatives();
+        return $this->render('default/initiative.html.twig', array('form' => $form->createView(),'allInitiatives' => $allInitiatives));
+        // return $this->render('default/initiative.html.twig', array(
+        //     'form' => $form->createView(),
+        // ));
+        
     }
 
 }
