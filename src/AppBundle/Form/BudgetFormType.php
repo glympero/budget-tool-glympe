@@ -16,11 +16,34 @@ class BudgetFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('value', NumberType::class)
-            ->add('startDate', DateType::class)
-            ->add('endDate', DateType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Budget'))
+            ->add('title', TextType::class,array(
+
+                'attr'   =>  array(
+                    'placeholder' => 'e.g. Moving to U.K.',
+                    'class'   => 'text-center'
+                )
+            ))
+            ->add('value', NumberType::class,array(
+
+                'attr'   =>  array(
+                    'placeholder' => 'e.g. 1000',
+                    'class'   => 'text-center'
+                )
+            ))
+            ->add('startDate', DateType::class, array(
+                'format' => 'dd MM yyyy',
+            ))
+            ->add('endDate', DateType::class, array(
+                'format' => 'dd MM yyyy',
+            ))
+            ->add('save', SubmitType::class,
+                array(
+                    'label' => 'Create Budget',
+                    'attr'   =>  array(
+                        'class'   => 'btn btn-primary'
+                    )
+
+                ))
         ;
     }
 

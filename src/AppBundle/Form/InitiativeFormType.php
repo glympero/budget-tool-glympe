@@ -17,7 +17,14 @@ class InitiativeFormType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('value', NumberType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Initiative'))
+            ->add('save', SubmitType::class,
+                array(
+                    'label' => 'Create Initiative',
+                    'attr'   =>  array(
+                        'class'   => 'btn btn-primary'
+                    )
+                )
+            )
         ;
     }
 

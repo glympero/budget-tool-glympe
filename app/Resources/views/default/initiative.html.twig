@@ -9,7 +9,7 @@
         </p>
       </div>
       <div class="container text-center">
-
+          <div id="status">
         {% for type, flashes in app.session.flashbag.all %}
           {% for flash in flashes %}
               <div class="alert alert-{{ type }} fade in">
@@ -17,15 +17,22 @@
               </div>
           {% endfor %}
       {% endfor %}
-        
-        <h2>Add an initiative</h2>
+          {% if errors|default %}
+              <ul class="list-group col-xs-offset-3 col-xs-6 text-center">
+                  {% for error in errors %}
+                      <li class="list-group-item list-group-item-danger">{{ error.message }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+          </div>
+        <h2 class="col-xs-12">Add an initiative</h2>
     
       {{ form_start(form) }}
-      <div class="form-group col-xs-offset-4 col-xs-4">
+      <div class="form-group col-xs-offset-3 col-xs-6">
           {{ form_label(form.title) }}
           {{ form_widget(form.title, {'value': '' }) }}
          </div>
-         <div class="form-group col-xs-offset-4 col-xs-4">
+         <div class="form-group col-xs-offset-3 col-xs-6">
           {{ form_label(form.value) }}
           {{ form_widget(form.value, {'value': '' }) }}
         </div>

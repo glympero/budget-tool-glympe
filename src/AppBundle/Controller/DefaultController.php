@@ -31,6 +31,17 @@ class DefaultController extends Controller
             return $this->redirectToRoute('initiative', array('budget_id' => $budget_id));
         }
 
+        if($form->isSubmitted()){
+            $validator = $this->get('validator');
+            $errors = $validator->validate($form);
+            if (count($errors) > 0) {
+                return $this->render('default/index.html.twig', array(
+                    'form' => $form->createView(),
+                    'errors' => $errors,
+                ));
+            }
+        }
+
         return $this->render('default/index.html.twig', array(
             'form' => $form->createView()
         ));
@@ -67,8 +78,18 @@ class DefaultController extends Controller
             }else {
                 $flashMessage->getInfoMsg();
             }
-            
-            
+        }
+        if($form->isSubmitted()){
+            $validator = $this->get('validator');
+            $errors = $validator->validate($form);
+            $allInitiatives = $budget->getInitiatives();
+            if (count($errors) > 0) {
+                return $this->render('default/initiative.html.twig', array(
+                    'form' => $form->createView(),
+                    'errors' => $errors,
+                    'allInitiatives' => $allInitiatives
+                ));
+            }
         }
         //$em = $this->getDoctrine()->getManager();
 //        $allInitiatives = $em->getRepository('AppBundle:Initiative')
