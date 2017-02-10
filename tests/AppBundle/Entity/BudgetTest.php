@@ -4,11 +4,14 @@ namespace Tests\AppBundle\Entity;
 
 use AppBundle\Entity\Budget;
 use AppBundle\Entity\Initiative;
+use AppBundle\Service\BudgetExceeded;
 
 class BudgetTest extends \PHPUnit_Framework_TestCase
 {
     public function testBudget()
     {
+        $budgetExceeded = new BudgetExceeded();
+
         $budget = new Budget();
         $budget->setTitle("Test Budget");
         $budget->setValue(1000);
@@ -21,7 +24,7 @@ class BudgetTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1000, $budget->getValue());
 
-        $this->assertEquals(false, $budget->budgetExceeded());
+        $this->assertEquals(false, $budgetExceeded->budgetExceeded($budget));
         
         $initiative2 = new Initiative();
         $initiative2->setTitle("Second Initiative");
@@ -29,7 +32,7 @@ class BudgetTest extends \PHPUnit_Framework_TestCase
         $initiative2->setValue(800);
         $budget->addInitiative($initiative2);
         
-        $this->assertEquals(false, $budget->budgetExceeded());
+        $this->assertEquals(false, $budgetExceeded->budgetExceeded($budget));
 
         $initiative3 = new Initiative();
         $initiative3->setTitle("Third Initiative");
@@ -38,6 +41,6 @@ class BudgetTest extends \PHPUnit_Framework_TestCase
         
         $budget->addInitiative($initiative3);
 
-        $this->assertEquals(true, $budget->budgetExceeded());
+        $this->assertEquals(true, $budgetExceeded->budgetExceeded($budget));
     }
 }

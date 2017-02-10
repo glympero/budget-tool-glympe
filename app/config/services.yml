@@ -10,3 +10,8 @@ services:
 services:
     fos_user.doctrine_registry:
         alias: doctrine
+    app.show_flash_messages:
+      class: AppBundle\Service\FlashMessage
+      arguments: ["@session"]
+    app.budget_exceeded:
+      class: AppBundle\Service\BudgetExceeded
