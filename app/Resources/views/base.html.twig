@@ -3,22 +3,28 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Budget Tool{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+            <link rel="stylesheet"
+                href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/main.css') }}" />
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet"
-            href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/vendor/main.css') }}" />
     </head>
     <body>
-        <div class="container">
-        {% block body %}{% endblock %}
+        <div class="main-content">
+        {% block body %}
+            {% include('default/navbar.html.twig') %}
+        {% endblock %}
         <hr/>
         <footer class="main">
           <p>Created by: Georgios Lymperopoulos</p>
           <p>Contact information: <a href="mailto:glympe77@gmail.com">
           glympe77@gmail.com</a>.</p>
         </footer>
-        {% block javascripts %}{% endblock %}
         </div>
+        {% block javascripts %}
+
+        {% endblock %}
     </body>
 </html>

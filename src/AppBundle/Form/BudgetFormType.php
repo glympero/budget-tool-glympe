@@ -36,14 +36,6 @@ class BudgetFormType extends AbstractType
             ->add('endDate', DateType::class, array(
                 'format' => 'dd MM yyyy',
             ))
-            ->add('save', SubmitType::class,
-                array(
-                    'label' => 'Create Budget',
-                    'attr'   =>  array(
-                        'class'   => 'btn btn-primary'
-                    )
-
-                ))
         ;
     }
 

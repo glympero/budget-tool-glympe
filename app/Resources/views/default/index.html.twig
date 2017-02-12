@@ -1,58 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  {% include('default/navbar.html.twig') %}
+    {{ parent() }}
+    <div class="container text-center">
       <div class="starter-template jumbotron">
         <h1>Welcome to Budget Tool</h1>
         <p class="lead">
           Create a budget and keep track of your expenses!
         </p>
       </div>
-      <div class="container">
-
         <div id="status">
           {% for flash_message in app.session.flashBag.get('notice') %}
               <div class="flash-notice">
                   {{ flash_message }}
               </div>
           {% endfor %}
-            {% if errors|default %}
-            <ul class="list-group col-xs-offset-3 col-xs-6 text-center">
-                {% for error in errors %}
-                    <li class="list-group-item list-group-item-danger">{{ error.message }}</li>
-                {% endfor %}
-            </ul>
-                {% endif %}
+            {#{% if errors|default %}#}
+            {#<ul class="list-group col-xs-offset-3 col-xs-6">#}
+                {#{% for error in errors %}#}
+                    {#<li class="list-group-item list-group-item-danger">{{ error.message }}</li>#}
+                {#{% endfor %}#}
+            {#</ul>#}
+            {#{% endif %}#}
         </div>
-
-        
-          <h2 class="text-center col-xs-12">Add a budget</h2>
-          <div class="text-center">
+          <h2 class="col-xs-12">Add a budget</h2>
             {{ form_start(form) }}
-
             <div class="form-group col-xs-offset-3 col-xs-6">
-              {{ form_label(form.title) }}
-              {{ form_widget(form.title, {'value': '' }) }}
+              {{ form_row(form.title, {'value': '' }) }}
              </div>
              <div class="form-group col-xs-offset-3 col-xs-6">
-              {{ form_label(form.value) }}
-              {{ form_widget(form.value, {'value': '' }) }}
+              {{ form_row(form.value, {'value': '' }) }}
             </div>
             <div class="form-group col-xs-offset-4 col-xs-4">
-              {{ form_label(form.startDate) }}
-              {{ form_widget(form.startDate) }}
+              {{ form_row(form.startDate) }}
             </div>
             <div class="form-group col-xs-offset-4 col-xs-4">
-              {{ form_label(form.endDate) }}
-              {{ form_widget(form.endDate) }}
+              {{ form_row(form.endDate) }}
             </div>
               <div class="col-xs-offset-4 col-xs-4">
-            {{ form_end(form) }}
+                  <button type="submit" class="btn btn-primary" formnovalidate>Add Budget</button>
               </div>
-        </div>
+            {{ form_end(form) }}
+
       </div>
-{% endblock %}
-
-{% block stylesheets %}
-
 {% endblock %}

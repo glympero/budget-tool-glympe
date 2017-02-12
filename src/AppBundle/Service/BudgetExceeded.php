@@ -20,12 +20,7 @@ class BudgetExceeded
 
     public function budgetExceeded(Budget $budget)
     {
-        $total = 0;
-        $initiatives = $budget->getInitiatives();
-        foreach($initiatives as $initiative)
-        {
-            $total += $initiative->getValue();
-        }
+        $total = $this->getTotalValue($budget);
 
         if($total <= $budget->getValue()){
             return false;
@@ -33,4 +28,14 @@ class BudgetExceeded
         return true;
     }
 
+    public function getTotalValue(Budget $budget)
+    {
+        $total = 0;
+        $initiatives = $budget->getInitiatives();
+        foreach($initiatives as $initiative)
+        {
+            $total += $initiative->getValue();
+        }
+        return $total;
+    }
 }

@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  {% include('default/navbar.html.twig') %}
+    {{ parent() }}
+    <div class="container text-center">
     <div class="starter-template jumbotron">
         <h1>Welcome to Budget Tool</h1>
         <p class="lead">
           Create a budget and keep track of your expenses!
         </p>
       </div>
-      <div class="container text-center">
+
           <div id="status">
         {% for type, flashes in app.session.flashbag.all %}
           {% for flash in flashes %}
@@ -16,7 +17,7 @@
                   {{ flash }}
               </div>
           {% endfor %}
-      {% endfor %}
+        {% endfor %}
           {% if errors|default %}
               <ul class="list-group col-xs-offset-3 col-xs-6 text-center">
                   {% for error in errors %}
@@ -25,27 +26,25 @@
               </ul>
           {% endif %}
           </div>
-        <h2 class="col-xs-12">Add an initiative</h2>
-    
+    <h2 class="col-xs-12">Add an initiative</h2>
+    <h2><span class="small col-xs-12">(Budget {{ budgetValue|number_format(4) }})</span></h2>
+    <div class="text-center">
       {{ form_start(form) }}
       <div class="form-group col-xs-offset-3 col-xs-6">
-          {{ form_label(form.title) }}
-          {{ form_widget(form.title, {'value': '' }) }}
+          {{ form_row(form.title, {'value': '' }) }}
          </div>
          <div class="form-group col-xs-offset-3 col-xs-6">
-          {{ form_label(form.value) }}
-          {{ form_widget(form.value, {'value': '' }) }}
+          {{ form_row(form.value, {'value': '' }) }}
         </div>
           <div class="col-xs-offset-4 col-xs-4">
       {{ form_end(form) }}
               <hr/>
           </div>
-
+    </div>
       <div class="container">
         <div class="row">
           <div class="col-sm-8 col-sm-offset-2">
             {% if allInitiatives|default %}
-            {#{% if allInitiatives is defined %}#}
               <h2>Initiatives Table</h2>
               <table class="table table-hover">
                 <thead>
@@ -55,6 +54,19 @@
                     <th>Value</th>
                   </tr>
                 </thead>
+                <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <th></th>
+                 {% if totalValue <= budgetValue %}
+                    <th style="color:black">
+                  {% else %}
+                    <th style="color:red">
+                  {% endif %}
+                  {{ totalValue|number_format(4) }}
+                  </th>
+                </tr>
+               </tfoot>
                 <tbody>
                   {% for i in allInitiatives %}
                     <tr>
@@ -69,8 +81,4 @@
           </div>
         </div>
       </div>
-{% endblock %}
-
-{% block stylesheets %}
-
 {% endblock %}

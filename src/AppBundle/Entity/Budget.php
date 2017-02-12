@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BudgetRepository")
  * @ORM\Table(name="budget")
  */
 class Budget
@@ -44,6 +44,10 @@ class Budget
      * @ORM\Column(type="datetime", name="end_date")
      * @Assert\NotBlank()
      * @Assert\Type("\DateTime")
+     * @Assert\Expression(
+     *     "this.getStartDate() <= this.getEndDate()",
+     *     message="The end date must be after the start date"
+     * )
      */
     private $endDate;
 
@@ -161,21 +165,6 @@ class Budget
     public function getEndDate()
     {
         return $this->endDate;
-    }
-
-    public function budgetExceeded()
-    {
-        $total = 0;
-        $initiatives = $this->getInitiatives();
-        foreach($initiatives as $initiative)
-        {
-            $total += $initiative->getValue();
-        }
-
-        if($total <= $this->getValue()){
-            return false;
-        }
-        return true;
     }
 
     /**

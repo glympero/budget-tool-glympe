@@ -15,8 +15,19 @@ class InitiativeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('value', NumberType::class)
+            ->add('title', TextType::class,array(
+                'attr'   =>  array(
+                    'placeholder' => 'Add an initiative',
+                    'class'   => 'text-center'
+                ))
+            )
+            ->add('value', NumberType::class,array(
+
+                'attr'   =>  array(
+                    'placeholder' => 'e.g. 1000',
+                    'class'   => 'text-center'
+                ))
+            )
             ->add('save', SubmitType::class,
                 array(
                     'label' => 'Create Initiative',

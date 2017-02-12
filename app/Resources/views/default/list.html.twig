@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container text-center">
+        <div class="starter-template jumbotron">
+            <h1>Welcome to Budget Tool</h1>
+            <p class="lead">
+                Here is a list of all created budgets!
+            </p>
+        </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Budget</th>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for budget in budgets %}
+            <tr>
+                <td>
+                    <a href="{{ path('initiative', {'budget_id': budget.id}) }}">
+                        {{ budget.title }}
+                    </a>
+                </td>
+                <td>{{ budget.value }}</td>
+                <td>{{ budget.startDate|date('Y-m-d') }}</td>
+                <td>{{ budget.endDate|date('Y-m-d') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

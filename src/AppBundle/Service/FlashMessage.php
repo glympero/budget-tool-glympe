@@ -19,16 +19,25 @@ class FlashMessage
 
     public function getDangerMsg()
     {
-        return $this->session->getFlashBag()->add('danger', 'Your initiative has been saved! - budget exceeded!');
+        return $this->session->getFlashBag()->add(
+            'danger',
+            'Your initiative has been saved! - budget exceeded!'
+        );
     }
 
     public function getInfoMsg()
     {
-        return $this->session->getFlashBag()->add('info', 'Your initiative has been saved! - budget not exceeded');
+        return $this->session->getFlashBag()->add(
+            'info',
+            'Your initiative has been saved! - budget not exceeded'
+        );
     }
 
     public function getSuccessMsg()
     {
-        return $this->session->getFlashBag()->add('success', 'Your budget has been saved!');
+        return $this->session->getFlashBag()->add(
+            'success',
+            'Your budget has been saved!'
+        );
     }
 }
